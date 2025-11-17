@@ -15,22 +15,22 @@ public class DatabaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
 
-    @Bean
-    @Profile("dev")
-    public DataSource devDataSource() {
-        logger.info("========================================");
-        logger.info("Configuring MySQL DataSource for DEV");
-        logger.info("========================================");
-
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/food_delivery_dev?createDatabaseIfNotExist=true");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-
-        logger.info("MySQL Database URL: {}", dataSource.getUrl());
-        return dataSource;
-    }
+//    @Bean
+//    @Profile("dev")
+//    public DataSource devDataSource() {
+//        logger.info("========================================");
+//        logger.info("Configuring MySQL DataSource for DEV");
+//        logger.info("========================================");
+//
+//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//        dataSource.setUrl("jdbc:mysql://localhost:3306/food_delivery_dev?createDatabaseIfNotExist=true");
+//        dataSource.setUsername("root");
+//        dataSource.setPassword("root");
+//
+//        logger.info("MySQL Database URL: {}", dataSource.getUrl());
+//        return dataSource;
+//    }
 
     @Bean
     @Profile("prod")
@@ -41,7 +41,7 @@ public class DatabaseConfig {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/food_delivery_prod");
+        dataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/postgres?currentSchema=public&user=postgres&password=postgres");
         dataSource.setUsername("postgres");
         dataSource.setPassword("postgres");
 
