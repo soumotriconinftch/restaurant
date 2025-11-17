@@ -1,5 +1,6 @@
 package com.fooddelivery.restaurant_api.controller;
 
+import com.fooddelivery.restaurant_api.dto.RestaurantRequest;
 import com.fooddelivery.restaurant_api.entity.Restaurant;
 import com.fooddelivery.restaurant_api.service.RestaurantService;
 import jakarta.validation.Valid;
@@ -23,6 +24,7 @@ public class RestaurantController {
     @GetMapping
     public ResponseEntity<List<Restaurant>> getAllRestaurants() {
         logger.info("GET /restaurants - Fetching all restaurants");
+
         return ResponseEntity.ok(restaurantService.getAllRestaurants());
     }
 
@@ -38,18 +40,19 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantService.getRestaurantById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
-        logger.info("POST /restaurants - Creating new restaurant");
-        Restaurant created = restaurantService.createRestaurant(restaurant);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
+//    @PostMapping
+//    public ResponseEntity<Restaurant> createRestaurant(@Valid @RequestBody Restaurant restaurant) {
+//        logger.info("POST /restaurants - Creating new restaurant");
+//        Restaurant created = restaurantService.createRestaurant(restaurant);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(
             @PathVariable Long id,
             @Valid @RequestBody Restaurant restaurant) {
         logger.info("PUT /restaurants/{} - Updating restaurant", id);
+
         return ResponseEntity.ok(restaurantService.updateRestaurant(id, restaurant));
     }
 
@@ -70,5 +73,10 @@ public class RestaurantController {
     public ResponseEntity<List<Restaurant>> getRestaurantsByRating(@PathVariable Double minRating) {
         logger.info("GET /restaurants/rating/{}", minRating);
         return ResponseEntity.ok(restaurantService.getRestaurantsByMinRating(minRating));
+    }
+    @PostMapping
+    public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantRequest request) {
+        Restaurant restaurant = restaurantService.createRestaurant(request);
+        return ResponseEntity.ok(restaurant);
     }
 }

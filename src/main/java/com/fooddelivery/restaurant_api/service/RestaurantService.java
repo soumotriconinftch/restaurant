@@ -1,11 +1,13 @@
 package com.fooddelivery.restaurant_api.service;
 
+import com.fooddelivery.restaurant_api.dto.RestaurantRequest;
 import com.fooddelivery.restaurant_api.entity.Restaurant;
 import com.fooddelivery.restaurant_api.exception.ResourceNotFoundException;
 import com.fooddelivery.restaurant_api.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +18,21 @@ import java.util.List;
 public class RestaurantService {
 
     private static final Logger logger = LoggerFactory.getLogger(RestaurantService.class);
-    private final RestaurantRepository restaurantRepository;
+
+    @Autowired
+    private RestaurantRepository restaurantRepository;
+
+    public Restaurant createRestaurant(RestaurantRequest request) {
+
+        Restaurant restaurant = new Restaurant();
+        restaurant.setName(request.getName());
+        restaurant.setEmail(request.getEmail());
+        restaurant.setAddress(request.getAddress());
+        restaurant.setRating(request.getRating());
+        //restaurant.setActive(request.isActive());
+
+        return restaurantRepository.save(restaurant);
+    }
 
     @Transactional(readOnly = true)
     public List<Restaurant> getAllRestaurants() {
